@@ -159,18 +159,28 @@ export default function FormPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phoneNumber" className="text-white">
-                    Phone Number *
-                  </Label>
-                  <Input
-                    id="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                    <Label htmlFor="phoneNumber" className="text-white">
+                        Phone Number *
+                    </Label>
+                    <Input
+                        id="phoneNumber"
+                        type="tel"
+                        value={formData.phoneNumber}
+                        onChange={(e) => {
+                          const value = e.target.value.replace(/\D/g, ""); // allow only digits
+                          if (value.length <= 10) {
+                            handleInputChange("phoneNumber", value);
+                          }
+                        }}
                     className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
-                    placeholder="Enter your phone number"
+                    placeholder="Enter 10-digit phone number"
+                    minLength={10}
+                    maxLength={10}
+                    pattern="\d{10}"
                     required
                   />
                 </div>
+
 
                 <div className="space-y-2 md:col-span-2">
                   <Label className="text-white">Education/Qualification *</Label>
